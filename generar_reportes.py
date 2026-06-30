@@ -138,15 +138,15 @@ def generar_pdf_interno(
 class PDFCliente(FPDF):
     def header(self):
         if os.path.exists(LOGO_PATH):
-            self.image(LOGO_PATH, x=10, y=6, w=42)
-        self.set_xy(55, 8)
-        self.set_font("Helvetica", "B", 14)
-        self.cell(145, 8, EMPRESA, align="C", new_x="LMARGIN", new_y="NEXT")
-        self.set_x(55)
+            self.image(LOGO_PATH, x=8, y=4, w=35)
+        self.set_xy(46, 6)
+        self.set_font("Helvetica", "B", 13)
+        self.cell(155, 7, EMPRESA, align="C", new_x="LMARGIN", new_y="NEXT")
+        self.set_x(46)
         self.set_font("Helvetica", "", 9)
-        self.cell(145, 5, "Soluciones en Energia Solar", align="C", new_x="LMARGIN", new_y="NEXT")
-        self.ln(5)
-        self.line(10, self.get_y(), 200, self.get_y())
+        self.cell(155, 5, "Soluciones en Energia Solar", align="C", new_x="LMARGIN", new_y="NEXT")
+        self.set_y(22)
+        self.line(8, 22, 202, 22)
         self.ln(4)
 
     def footer(self):
