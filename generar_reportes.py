@@ -138,13 +138,16 @@ def generar_pdf_interno(
 class PDFCliente(FPDF):
     def header(self):
         if os.path.exists(LOGO_PATH):
-            self.image(LOGO_PATH, x=10, y=8, w=40)
-        self.set_font("Helvetica", "B", 16)
-        self.cell(0, 10, EMPRESA, align="C", new_x="LMARGIN", new_y="NEXT")
-        self.set_font("Helvetica", "", 10)
-        self.cell(0, 5, "Soluciones en Energia Solar", align="C", new_x="LMARGIN", new_y="NEXT")
-        self.line(10, 28, 200, 28)
-        self.ln(10)
+            self.image(LOGO_PATH, x=10, y=6, w=42)
+        self.set_xy(55, 8)
+        self.set_font("Helvetica", "B", 14)
+        self.cell(145, 8, EMPRESA, align="C", new_x="LMARGIN", new_y="NEXT")
+        self.set_x(55)
+        self.set_font("Helvetica", "", 9)
+        self.cell(145, 5, "Soluciones en Energia Solar", align="C", new_x="LMARGIN", new_y="NEXT")
+        self.ln(5)
+        self.line(10, self.get_y(), 200, self.get_y())
+        self.ln(4)
 
     def footer(self):
         self.set_y(-15)
@@ -166,7 +169,7 @@ def _crear_grafica_roi(inversion: float, ahorro_anual: float, roi_anios: float) 
     if mes_roi <= max(meses):
         ax.axvline(x=mes_roi, color="#27AE60", linestyle=":", linewidth=1)
         ax.annotate(
-            f"ROI: {mes_roi} meses\n({roi_anios:.1f} anios)",
+            f"ROI: {mes_roi} meses\n({roi_anios:.1f} años)",
             xy=(mes_roi, inversion), xytext=(mes_roi + 6, inversion * 0.65),
             arrowprops=dict(arrowstyle="->", color="#27AE60"),
             fontsize=9, color="#27AE60", fontweight="bold",
@@ -188,7 +191,7 @@ def _crear_grafica_roi(inversion: float, ahorro_anual: float, roi_anios: float) 
 
 
 def _crear_grafica_ahorro(ahorro_anual: float) -> bytes:
-    categorias = ["Mensual", "Anual", "5 Anios", "10 Anios", "25 Anios"]
+    categorias = ["Mensual", "Anual", "5 Años", "10 Años", "25 Años"]
     valores = [ahorro_anual / 12, ahorro_anual, ahorro_anual * 5, ahorro_anual * 10, ahorro_anual * 25]
 
     fig, ax = plt.subplots(figsize=(7, 3))
@@ -314,7 +317,7 @@ def generar_pdf_cliente(
         pdf.ln(3)
         pdf.set_font("Helvetica", "B", 12)
         pdf.set_text_color(39, 174, 96)
-        pdf.cell(0, 8, f"Tiempo estimado de recuperacion: {roi_anios:.1f} anios ({roi_anios*12:.0f} meses)", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 8, f"Tiempo estimado de recuperacion: {roi_anios:.1f} años ({roi_anios*12:.0f} meses)", new_x="LMARGIN", new_y="NEXT")
         pdf.set_text_color(0)
     pdf.ln(5)
 
@@ -348,7 +351,7 @@ def generar_pdf_cliente(
     pdf.set_font("Helvetica", "", 10)
     beneficios = [
         "Reduccion de hasta 85% en su recibo de luz.",
-        "Vida util de los paneles de 25+ anios con garantia.",
+        "Vida util de los paneles de 25+ años con garantia.",
         "Incremento en el valor de su propiedad.",
         "Contribucion al medio ambiente con energia limpia.",
         "Proteccion contra aumentos futuros en tarifas electricas.",
