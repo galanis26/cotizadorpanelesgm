@@ -12,6 +12,17 @@ LOGO_PATH = os.path.join(os.path.dirname(__file__), "assets", "logo.jpg")
 EMPRESA = "GM Ferretera de Equipos S.A de C.V."
 
 
+MESES_ES = {
+    "January": "enero", "February": "febrero", "March": "marzo", "April": "abril",
+    "May": "mayo", "June": "junio", "July": "julio", "August": "agosto",
+    "September": "septiembre", "October": "octubre", "November": "noviembre", "December": "diciembre",
+}
+
+
+def _fecha_es(dt: datetime) -> str:
+    return f"{dt.day} de {MESES_ES[dt.strftime('%B')]} de {dt.year}"
+
+
 def _fmt(n: float) -> str:
     return f"${n:,.2f}"
 
@@ -215,7 +226,7 @@ def generar_pdf_cliente(
 
     # --- Página 1: Descripción y desglose ---
     pdf.set_font("Helvetica", "", 10)
-    pdf.cell(0, 6, f"Fecha: {datetime.now().strftime('%d de %B de %Y')}", align="R", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 6, f"Fecha: {_safe(_fecha_es(datetime.now()))}", align="R", new_x="LMARGIN", new_y="NEXT")
     if nombre_cliente:
         pdf.set_font("Helvetica", "B", 10)
         pdf.cell(0, 6, f"Cliente: {nombre_cliente}", new_x="LMARGIN", new_y="NEXT")
